@@ -39,8 +39,7 @@ public class Menu {
 
     public void addRicetta(Ricetta r) {
         ricette.add(r);
-        for (Ingrediente i : r.getElenco())
-            setIngredienti.add(i);
+        setIngredienti.addAll(r.getElenco());
     }
 
     public ArrayList<Ingrediente> getIngredient(Scanner in) {
@@ -59,11 +58,23 @@ public class Menu {
                 int index = scan.nextInt();
                 ingredienti.add(setIngredienti.get(index));
             } while (scan.hasNext());
-        } catch (Exception e) {}
+        } catch (Exception e) {e.printStackTrace();}
         return ingredienti;
     }
 
     public String toString() {
         return "Ecco la lista di tutte le ricette preparate: \n" + ricette;
+    }
+
+    public ArrayList<Ricetta> getRicette() {
+        return ricette;
+    }
+
+    public ArrayList<Ingrediente> getSetIngredienti() {
+        return setIngredienti;
+    }
+
+    public void addIngrediente(Ingrediente i) {
+        this.setIngredienti.add(i);
     }
 }

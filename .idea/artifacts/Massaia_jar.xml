@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Massaia:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Massaia_jar</output-path>
+    <root id="archive" name="Massaia.jar">
+      <element id="module-output" name="Massaia" />
+      <element id="archive" name="archive.jar" />
+    </root>
+  </artifact>
+</component>

@@ -99,9 +99,10 @@ public class Util {
                 System.out.println("--------------------------------------------------------------------------");
                 System.out.println("1. Aggiungi ricetta alla lista");
                 System.out.println("2. Ricetta da ingredienti presenti (devi aver inserito almeno una ricetta)");
-                System.out.println("3. Visualizza ricette");
-                System.out.println("4. Prepara menu");
-                System.out.println("5. Termina il programma");
+                System.out.println("3. Inserisci un nuovo ingrediente");
+                System.out.println("4. Visualizza ricette");
+                System.out.println("5. Prepara menu");
+                System.out.println("6. Termina il programma");
                 System.out.print(">");
                 try {
                     s = in.nextInt();
@@ -117,20 +118,34 @@ public class Util {
                     }
 
                     case 2: {
-                        menu.addRicetta(createRicettaFromExistingIngredients(menu.getIngredient(in),in));
+                        if (menu.getSetIngredienti().size()==0)
+                            System.out.println("Errore! Non ci sono ingredienti!");
+                        else
+                            menu.addRicetta(createRicettaFromExistingIngredients(menu.getIngredient(in),in));
+                        break;
                     }
                     case 3: {
-                        System.out.println(menu.toString());
+                        boolean internalLoop = false;
+                        do {
+                            System.out.println("Inserisci il nuovo ingrediente: ");
+                            menu.addIngrediente(creaIngrediente(in));
+                            in.nextLine();
+                            internalLoop = yesOrNo(in,"Vuoi aggiungere altri ingredienti?");
+                        } while (internalLoop);
                         break;
                     }
                     case 4: {
+                        System.out.println(menu.toString());
+                        break;
+                    }
+                    case 5: {
                         System.out.println("Inserire l'apporto calorico massimo: ");
                         double maxCal = in.nextDouble();
                         printArray(menu.combinazioneRicette(maxCal));
                         break;
                     }
 
-                    case 5: {
+                    case 6: {
                         loop = !yesOrNo(in, "Vuoi davvero terminare?");
                         break;
                     }

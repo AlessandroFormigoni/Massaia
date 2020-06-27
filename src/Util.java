@@ -1,26 +1,30 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Util {
 
     private static Ingrediente creaIngrediente(Scanner in) {
-        double peso = 0;
-        double calorie = 0;
-        System.out.println("Inserire nome ingrediente: ");
-         String nome = in.nextLine();
-         do {
-             System.out.println("Inserire peso(in hg): ");
-             peso = in.nextDouble();
-         } while (peso<=0);
+       try {
+           double peso = 0;
+           double calorie = 0;
+           System.out.println("Inserire nome ingrediente: ");
+           String nome = in.nextLine();
+           do {
+               System.out.println("Inserire peso(in hg): ");
+               peso = in.nextDouble();
+           } while (peso <= 0);
 
-         do {
-             System.out.println("Inserire calorie per hg: ");
-             calorie = in.nextDouble();
-         } while (calorie<=0);
+           do {
+               System.out.println("Inserire calorie per hg: ");
+               calorie = in.nextDouble();
+           } while (calorie <= 0);
 
-         return new Ingrediente(nome, peso, calorie);
+           return new Ingrediente(nome, peso, calorie);
+       } catch (InputMismatchException e) {System.out.println("Errore nel inserimento dei dati");}
+       return null;
     }
 
     private static Ricetta creaRicetta(Scanner in) {
@@ -120,8 +124,13 @@ public class Util {
                     case 2: {
                         if (menu.getSetIngredienti().size()==0)
                             System.out.println("Errore! Non ci sono ingredienti!");
-                        else
-                            menu.addRicetta(createRicettaFromExistingIngredients(menu.getIngredient(in),in));
+                        else {
+                            ArrayList<Ingrediente> ing = menu.getIngredient(in);
+                            if (ing == null)
+                                System.out.println("Oops, qualcosa e' andato storto");
+                            else
+                                menu.addRicetta(createRicettaFromExistingIngredients(ing, in));
+                        }
                         break;
                     }
                     case 3: {

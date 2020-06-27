@@ -39,19 +39,27 @@ public class Menu {
 
     public void addRicetta(Ricetta r) {
         ricette.add(r);
-        setIngredienti.addAll(r.getElenco());
+        for(Ingrediente i : r.getElenco()) {
+            if (!setIngredienti.contains(i))
+                setIngredienti.add(i);
+        }
     }
 
     public ArrayList<Ingrediente> getIngredient(Scanner in) {
         ArrayList<Ingrediente> ingredienti = new ArrayList<>();
         int count=0;
         System.out.println("-----------------------------------------------------------");
-        for(Ingrediente i : setIngredienti) {
-            System.out.println(count+". "+i.getNome());
-            count++;
-        }
+
+        try {
+            for (Ingrediente i : setIngredienti) {
+                System.out.println(count + ". " + i.getNome());
+                count++;
+            }
+        }catch (NullPointerException e) {setIngredienti.remove(null); return null;}
+
         System.out.println("Scegli quali ingredienti inserire (separati da uno spazio) ");
         String elementi = in.nextLine();
+
         Scanner scan = new Scanner(elementi);
         try {
             do {
@@ -59,6 +67,7 @@ public class Menu {
                 ingredienti.add(setIngredienti.get(index));
             } while (scan.hasNext());
         } catch (Exception e) {e.printStackTrace();}
+
         return ingredienti;
     }
 

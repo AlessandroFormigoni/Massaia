@@ -150,7 +150,7 @@ public class Util {
                     case 5: {
                         System.out.println("Inserire l'apporto calorico massimo: ");
                         double maxCal = in.nextDouble();
-                        combinazioni = menu.combinazioneRicette(maxCal);
+                        combinazioni.addAll(menu.combinazioneRicette(maxCal));
                         printArray(menu.combinazioneRicette(maxCal));
                         ScriviCombinazioni.write(combinazioni, maxCal);
                         break;

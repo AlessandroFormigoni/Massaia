@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.ArrayList; 
 import java.util.Scanner;
 
 public class Menu {
@@ -26,8 +25,8 @@ public class Menu {
     }
 
     public ArrayList<Ricetta[]> combinazioneRicette(double maxCal) {
-        ArrayList<Ricetta[]> combinazioni = new ArrayList<>();
-        for(Ricetta primo: getPrimi()) {
+    	ArrayList<Ricetta[]> combinazioni = new ArrayList<>();
+    	for(Ricetta primo: getPrimi()) {
             for (Ricetta secondo: getSecondi()) {
                 if (primo.apportoCalorico()+secondo.apportoCalorico()<maxCal) {
                     combinazioni.add(new Ricetta[]{primo,secondo});
@@ -67,7 +66,7 @@ public class Menu {
                 ingredienti.add(setIngredienti.get(index));
             } while (scan.hasNext());
         } catch (Exception e) {e.printStackTrace();}
-
+        scan.close();
         return ingredienti;
     }
 
@@ -86,4 +85,5 @@ public class Menu {
     public void addIngrediente(Ingrediente i) {
         this.setIngredienti.add(i);
     }
+    
 }

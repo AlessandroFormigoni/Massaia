@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
@@ -79,7 +78,6 @@ public class Util {
     private static Ricetta createRicettaFromExistingIngredients(ArrayList<Ingrediente> ing, Scanner in) {
         String portata = null;
         Portata p = null;
-        boolean loop = false;
         System.out.println("Inserire nome ricetta: ");
         String nome = in.nextLine();
 
@@ -97,6 +95,7 @@ public class Util {
     public static void menu(Menu menu, Scanner in)  {
         boolean loop = true;
         int s = 5;
+        ArrayList<Ricetta[]> combinazioni = new ArrayList<>();
             System.out.println("Benvenuto, utente, all'applicazione che ti rendera la vita piu facile");
             System.out.println("Seleziona cosa vuoi fare dal menu");
             do {
@@ -106,7 +105,8 @@ public class Util {
                 System.out.println("3. Inserisci un nuovo ingrediente");
                 System.out.println("4. Visualizza ricette");
                 System.out.println("5. Prepara menu");
-                System.out.println("6. Termina il programma");
+                System.out.println("6. Salva i dati");
+                System.out.println("7. Termina il programma");
                 System.out.print(">");
                 try {
                     s = in.nextInt();
@@ -150,12 +150,23 @@ public class Util {
                     case 5: {
                         System.out.println("Inserire l'apporto calorico massimo: ");
                         double maxCal = in.nextDouble();
+                        combinazioni = menu.combinazioneRicette(maxCal);
                         printArray(menu.combinazioneRicette(maxCal));
+                        ScriviCombinazioni.write(combinazioni, maxCal);
                         break;
                     }
-
+                    
                     case 6: {
-                        loop = !yesOrNo(in, "Vuoi davvero terminare?");
+                    	try {
+                    		Menu tempMenu = menu;
+                    		ScriviFile.write(tempMenu);
+                    	} catch (Exception e) {System.out.println("Salvataggio non riuscito");}
+                    	System.out.println("Salvataggio riuscito!");
+                    	break;
+                    }
+
+                    case 7: {
+                        loop = !yesOrNo(in, "Vuoi davvero terminare (tutti i dati non salvati saranno persi)?");
                         break;
                     }
 
